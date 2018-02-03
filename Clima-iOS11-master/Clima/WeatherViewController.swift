@@ -8,7 +8,8 @@
 
 import UIKit
 import CoreLocation // Nos brinda la funcionalidad del GPS
-
+import Alamofire // Ayuda a los HTTP Request
+import SwiftyJSON // Ayuda a manejar la data del request
 
 class WeatherViewController: UIViewController, CLLocationManagerDelegate {
     
@@ -46,7 +47,20 @@ class WeatherViewController: UIViewController, CLLocationManagerDelegate {
     /***************************************************************/
     
     //Write the getWeatherData method here:
-    
+    func getWeatherData(url: String, parameters: [String: String]){
+        
+        Alamofire.request(url, method: .get, parameters: parameters).responseJSON {
+            response in
+            if response.result.isSuccess {
+                print("Success! Got weather data")
+                
+            }
+            else {
+                print("Error \(response.result.error)")
+                self.cityLabel.text = "Connection Issues"
+            }
+        }
+    }
 
     
     
@@ -90,6 +104,8 @@ class WeatherViewController: UIViewController, CLLocationManagerDelegate {
             let logitude = String(location.coordinate.longitude)
             
             let params : [String : String] = ["lat" : latitude, "lon" : logitude, "appid" : APP_ID]
+            
+            getWeatherData(url: WEATHER_URL, parameters: params)
         }
     }
     
