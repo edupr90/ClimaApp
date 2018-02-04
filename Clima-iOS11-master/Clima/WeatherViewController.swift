@@ -62,7 +62,7 @@ class WeatherViewController: UIViewController, CLLocationManagerDelegate {
                 
             }
             else {
-                print("Error \(response.result.error)")
+                print("Error \(String(describing: response.result.error))")
                 self.cityLabel.text = "Connection Issues"
             }
         }
@@ -82,17 +82,17 @@ class WeatherViewController: UIViewController, CLLocationManagerDelegate {
         
         if let tempResult = json["main"]["temp"].double {
         
-        weatherDataModel.temperature = Int((tempResult - 273.15) * 9 / 5 + 32 ) // Convertidor de Celsius a Fahrenheit
+            weatherDataModel.temperature = Int((tempResult - 273.15) * 9 / 5 + 32 ) // Convertidor de Celsius a Fahrenheit
         
-        weatherDataModel.city = json["name"].stringValue
+            weatherDataModel.city = json["name"].stringValue
         
-        weatherDataModel.condition = json["weather"][0]["id"].intValue
+            weatherDataModel.condition = json["weather"][0]["id"].intValue
         
-        weatherDataModel.watherDescription = json["weather"][0]["description"].stringValue
+            weatherDataModel.watherDescription = json["weather"][0]["description"].stringValue
         
-        weatherDataModel.weatherIconName = weatherDataModel.updateWeatherIcon(condition: weatherDataModel.condition)
+            weatherDataModel.weatherIconName = weatherDataModel.updateWeatherIcon(condition: weatherDataModel.condition)
             
-        updateUIWithWeatherData()
+            updateUIWithWeatherData()
         }
         else {
             cityLabel.text = "Weather Unavailble"
