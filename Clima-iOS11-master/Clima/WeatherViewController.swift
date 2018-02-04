@@ -80,7 +80,6 @@ class WeatherViewController: UIViewController, CLLocationManagerDelegate {
     //Write the updateWeatherData method here:
     func updateWeatherData(json: JSON) {
         
-        
         if let tempResult = json["main"]["temp"].double {
         
         weatherDataModel.temperature = Int((tempResult - 273.15) * 9 / 5 + 32 ) // Convertidor de Celsius a Fahrenheit
@@ -129,6 +128,7 @@ class WeatherViewController: UIViewController, CLLocationManagerDelegate {
     
     //Write the didUpdateLocations method here:
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        
         let location = locations[locations.count - 1]
         if location.horizontalAccuracy > 0{
             locationManager.stopUpdatingLocation()
@@ -143,13 +143,16 @@ class WeatherViewController: UIViewController, CLLocationManagerDelegate {
             
             getWeatherData(url: WEATHER_URL, parameters: params)
         }
+        
     }
     
     
     //Write the didFailWithError method here:
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+       
         print(error)
         cityLabel.text = "Location Unavaible"
+        
     }
     
     
