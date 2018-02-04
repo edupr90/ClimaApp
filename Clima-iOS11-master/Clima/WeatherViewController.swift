@@ -27,7 +27,8 @@ class WeatherViewController: UIViewController, CLLocationManagerDelegate {
     @IBOutlet weak var weatherIcon: UIImageView!
     @IBOutlet weak var cityLabel: UILabel!
     @IBOutlet weak var temperatureLabel: UILabel!
-
+    @IBOutlet weak var weatherDescription: UILabel!
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -88,6 +89,8 @@ class WeatherViewController: UIViewController, CLLocationManagerDelegate {
         
         weatherDataModel.condition = json["weather"][0]["id"].intValue
         
+        weatherDataModel.watherDescription = json["weather"][0]["description"].stringValue
+        
         weatherDataModel.weatherIconName = weatherDataModel.updateWeatherIcon(condition: weatherDataModel.condition)
             
         updateUIWithWeatherData()
@@ -110,6 +113,7 @@ class WeatherViewController: UIViewController, CLLocationManagerDelegate {
     func updateUIWithWeatherData() {
         
         cityLabel.text = weatherDataModel.city
+        weatherDescription.text = weatherDataModel.watherDescription
         temperatureLabel.text = String(weatherDataModel.temperature)
         weatherIcon.image = UIImage(named: weatherDataModel.weatherIconName)
         
