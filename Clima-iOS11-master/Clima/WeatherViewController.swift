@@ -114,7 +114,7 @@ class WeatherViewController: UIViewController, CLLocationManagerDelegate, Change
         
         cityLabel.text = weatherDataModel.city
         weatherDescription.text = weatherDataModel.watherDescription
-        temperatureLabel.text = String(weatherDataModel.temperature)
+        temperatureLabel.text = "\(weatherDataModel.temperature)°"
         weatherIcon.image = UIImage(named: weatherDataModel.weatherIconName)
         
     }
@@ -165,7 +165,11 @@ class WeatherViewController: UIViewController, CLLocationManagerDelegate, Change
     
     //Write the userEnteredANewCityName Delegate method here:
     func userEnterNewCityName(city: String) {
-        print(city)
+        
+        let params : [String : String] = ["q": city, "appid" : APP_ID]
+        
+        getWeatherData(url: WEATHER_URL, parameters: params)
+        
     }
 
     
